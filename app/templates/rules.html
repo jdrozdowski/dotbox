@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block title %}Zasady gry - {% endblock %}
+
+{% block header %}
+<h1 class="float-left">
+    <a class="site-logo" href="{{ url_for('index') }}">.dotbox</a>
+</h1>
+<a class="return-link float-right" onclick="window.history.back()" role="button">
+    <i class="close-button fas fa-times fa-2x first-player-color"></i>
+</a>
+{% endblock %}
+<i class="fas fa-times"></i>
+
+{% block body %}
+<main class="main-content pregame-content">
+    <h2 class="subpage-title">Zasady gry</h2>
+    <hr class="underline">
+    <ol class="rules_list">
+        <li>Gra przeznaczona jest dla 2 graczy (jednym z nich może być komputer).</li>
+        <li>Gra toczy się na kratkowanej planszy różnych rozmiarów.
+            <br>W miejscach przecinania się kratownicy znajdują się kropki.</li>
+        <li>Gra rozpoczyna się od pustej planszy.</li>
+        <li>Każdy gracz posiada własny kolor, na który zacieniowana zostanie zdobyta przez niego kratka.
+            <br>Wszystkie kreski mają ten sam wspólny kolor (niezależnie od gracza).</li>
+        <li>Gracze na przemian stawiają pojedyncze kreski na krawędziach kratek.
+            <br>Jedna kreska może łączyć tylko dwie kropki.</li>
+        <li>Kreski mogą mieć wspólne końce, ale nie mogą się przecinać ani na siebie nakładać.</li>
+        <li>Gracz, który jako ostatni wykona ruch zamykający pojedynczą kratkę, przejmuje ją i zdobywa punkt.</li>
+        <li>Gracz, który zdobył punkt, uprawniony jest do wykonania kolejnego ruchu.</li>
+        <li>Gra toczy się do zacieniowania ostatniej wolnej kratki.</li>
+    </ol>
+</main>
+{% endblock %}

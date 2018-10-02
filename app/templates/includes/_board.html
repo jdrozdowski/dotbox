@@ -1,0 +1,42 @@
+<table class="board" cellspacing="0">
+    {% for row in range(board.rows + 1) %}
+        <tr>
+            {% for col in range(board.cols + 1) %}
+                <td class="dot"></td>
+                {% if col < board.cols %}
+                    {% if (board.last_move is not none) and (board.last_move['direction'] == 'horizontal') and (board.last_move['row'] == row) and (board.last_move['col'] == col) %}
+                        <td class="h-edge h-edge{{ '--p1' if board.last_move['player'] == 0 else '--p2' }}">
+                    {% else %}
+                        <td class="h-edge h-edge{{ '--marked' if board.horizontal_edges[row][col] else '--unmarked' }}">
+                            {% if (players|length == 2) and not (board.horizontal_edges[row][col]) and (session['player_id'] == players[turn].player_id) %}
+                                <a class="h-edge__move" href="{{ url_for('move', game_id=game_id, direction='horizontal', row=row, col=col) }}"></a>
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for col in range(board.cols + 1) if row < board.rows %}
+                {% if (board.last_move is not none) and (board.last_move['direction'] == 'vertical') and (board.last_move['row'] == row) and (board.last_move['col'] == col) %}
+                    <td class="v-edge v-edge{{ '--p1' if board.last_move['player'] == 0 else '--p2' }}">
+                {% else %}
+                    <td class="v-edge v-edge{{ '--marked' if board.vertical_edges[row][col] else '--unmarked' }}">
+                        {% if (players|length == 2) and not (board.vertical_edges[row][col]) and (session['player_id'] == players[turn].player_id) %}
+                            <a class="v-edge__move" href="{{ url_for('move', game_id=game_id, direction='vertical', row=row, col=col) }}"></a>
+                        {% endif %}
+                    </td>
+                {% endif %}
+                {% if col < board.cols %}
+                    {% if board.boxes[row][col].owner == 0 %}
+                        <td class="box box--p1"></td>
+                    {% elif board.boxes[row][col].owner == 1 %}
+                        <td class="box box--p2"></td>
+                    {% else %}
+                        <td class="box"></td>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>

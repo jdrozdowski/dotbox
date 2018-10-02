@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+<a class="game-rules-button btn btn-outline-info float-right" href="{{ url_for('rules') }}" role="button">Zasady gry</a>
+{% endblock %}
+
+{% block body %}
+<main class="main-content index">
+    <h1 class="site-title">.dotbox</h1>
+    <p class="site-subtitle">Gra w kreski online</p>
+    <div class="buttons">
+        <a class="play-button btn btn-lg btn-outline-info" href="{{ url_for('start') }}" role="button">
+        <i class="fas fa-cogs fa-lg"></i>
+        <br>Graj z komputerem
+        <br>lub przyjacielem
+        </a>
+        <a class="play-button btn btn-lg btn-outline-danger" href="{{ url_for('online_games') }}" role="button">
+            <i class="fas fa-users fa-lg"></i>
+            <br>Stwórz lub dołącz
+            <br>do gry online
+        </a>
+    </div>
+</main>
+{% endblock %}

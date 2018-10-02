@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}{% endblock %}DotBox</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+        <link href="https://fonts.googleapis.com/css?family=Catamaran:400,600&amp;subset=latin-ext" rel="stylesheet">
+        <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block meta %}{% endblock %}
+    </head>
+    <body>
+        {% include 'includes/_messages.html' %}
+        <div class="content">
+            <header class="site-header clearfix">
+                {% block header %}
+                <h1 class="float-left">
+                     <a class="site-logo" href="{{ url_for('index') }}">.dotbox</a>
+                </h1>
+                <a class="btn btn btn-outline-info float-right" href="{{ url_for('rules') }}" role="button">Zasady gry</a>
+                {% endblock %}
+            </header>
+            {% block body %}{% endblock %}
+        </div>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" integrity="sha384-feJI7QwhOS+hwpX2zkaeJQjeiwlhOP+SdQDqhgvvo1DsjtiSQByFdThsxO669S2D" crossorigin="anonymous"></script>
+    </body>
+</html>

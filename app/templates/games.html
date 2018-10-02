@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<main class="main-content pregame-content pregame-content--settings">
+    <div class="online-games">
+
+
+    <section class="game-settings-form">
+        <h2 class="subpage-title">Stwórz nową grę</h2>
+        <hr class="underline">
+        {% from 'includes/_formhelpers.html' import render_field %}
+        <form method="POST" action="{{ url_for('online_games') }}">
+            <div class="game-settings-field">
+                {{ render_field(form.name, class="text-input") }}
+            </div>
+            <div class="game-settings-field">
+                {{ render_field(form.size) }}
+            </div>
+            <input class="create-button btn btn-outline-warning" type="submit" value="Rozpocznij grę">
+        </form>
+    </section>
+
+    <section class="game-settings-table">
+        <h2 class="subpage-title">Dołącz do istniejącej gry</h2>
+        <hr class="underline">
+        <table class="games-table">
+            <thead>
+                <tr>
+                    <th>Nazwa gry</th>
+                    <th>Rozmiar planszy</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for game in games %}
+                    <tr>
+                        <td>{{ game.name }}</td>
+                        <td>{{ game.board_size }}</td>
+                        <td>
+                            <a class="btn btn-outline-info" href="{{ url_for('join', game_id=game.game_id) }}" role="button">Dołącz</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+        </div>
+</main>
+{% endblock %}

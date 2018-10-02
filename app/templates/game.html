@@ -1,0 +1,89 @@
+{% extends 'layout.html' %}
+
+{% block meta %}
+{% if turn is not none %}
+    {% if (players|length != 2) or (session['player_id'] != players[turn].player_id) %}
+        <meta http-equiv="refresh" content="1">
+    {% elif players[turn].player_id is none %}
+        <meta http-equiv="refresh" content="1;url_for('move', 'game_id'=game_id, 'direction'=None, 'row'=None, 'col'=None)">
+    {% endif %}
+{% endif %}
+{% endblock %}
+
+{% block header %}
+<h1 class="float-left">
+    <a class="site-logo" href="{{ url_for('index') }}">.dotbox</a>
+</h1>
+<a class="btn btn-outline-info float-right" href="{{ url_for('rules') }}" role="button">Zasady gry</a>
+<a class="header-button btn btn-outline-danger float-right" href="{{ url_for('leave', game_id=game_id) }}" role="button">Opuść grę</a>
+{% endblock %}
+
+{% block body %}
+<main class="main-content game-field">
+    {% block scoreboard %}
+    <table class="scoreboard scoreboard--player1">
+        {% if turn == 0 %}
+            <tr>
+                <td class="text-center"><div class="box box--sm box--p1"></div></td>
+            </tr>
+        {% elif (turn is none) and (players[0].scores > players[1].scores) %}
+            <tr>
+                <td><i class="neutral-color fas fa-trophy fa-2x"></i></td>
+            </tr>
+        {% endif %}
+        <tr class="scoreboard__name first-player-color">
+            <td>Czerwony</td>
+        </tr>
+        <tr>
+            <td>{{ players[0].scores }}</td>
+        </tr>
+    </table>
+    <table class="scoreboard scoreboard--player2">
+        {% if turn == 1 %}
+            <tr>
+                <td class="text-center"><div class="box box--sm box--p2"></div></td>
+            </tr>
+        {% elif (turn is none) and (players[0].scores < players[1].scores) %}
+            <tr>
+                <td><i class="neutral-color fas fa-trophy fa-2x"></i></td>
+            </tr>
+        {% endif %}
+        <tr class="scoreboard__name second-player-color">
+            <td>Niebieski</td>
+        </tr>
+        <tr>
+            <td>{{ players[1].scores if players[1] is defined else 0 }}</td>
+        </tr>
+    </table>
+    {% endblock %}
+
+    {% include 'includes/_board.html' %}
+</main>
+
+
+{% if players|length != 2 %}
+    <footer class="game-statement">
+        <p class="neutral-color">Oczekiwanie na przybycie przeciwnika...</p>
+    </footer>
+{% elif (turn is none) and (players[0].scores > players[1].scores) %}
+    <footer class="game-statement">
+        <p class="first-player-color">Zwyciężył czerwony!</p>
+    </footer>
+{% elif (turn is none) and (players[0].scores < players[1].scores) %}
+    <footer class="game-statement">
+        <p class="second-player-color">Zwyciężył niebieski!</p>
+    </footer>
+{% elif (turn is none) and (players[0].scores == players[1].scores) %}
+    <footer class="game-statement">
+        <p class="neutral-color">Brak zwycięzcy. Remis!</p>
+    </footer>
+{% else %}
+    {% for player in players %}
+        {% if player == 'left' %}
+            <footer class="game-statement">
+                <p class="neutral-color">Przeciwnik opuścił grę.</p>
+            </footer>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+{% endblock %}
